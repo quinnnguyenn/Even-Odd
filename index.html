@@ -7,18 +7,62 @@
 </head>
 
 <body>
-    
-    <p id="display"></p>
 
-    <script type="text/javascript">
+<script>
+    let wins = 0
+    let losses = 0
+    let name;
+    window.onload = playGame;
 
-    let name = prompt('Hi! Whats your name?')
-    let guess = prompt('Welcome ('name') even or odd?')
+    function playerName() {
+            while (!name) {
+                name = prompt("Hi! Whats your name?");
+                if (!name) {
+                    alert('Please enter a name, ex: "Quinn"');
+                }
+            }
+        }
 
-    print("Hello World")
+        function playerGuess() {
+            let guess;
+            while (!guess || (guess.toLowerCase() !== "even" && guess.toLowerCase() !== "odd")) {
+                guess = prompt(`Welcome ${name}, even or odd?`, "even");
+                if (!guess || (guess.toLowerCase() !== "even" && guess.toLowerCase() !== "odd")) {
+                    alert('Please enter "even" or "odd".');
+                }
+            }
+            return guess.toLowerCase();
+        }
 
+        function playGame() {
+                if (!name) {
+                playerName();
+            }
 
-    
+            let guess = playerGuess();
+
+            let randomNumber1 = Math.floor(Math.random() * 4) + 1;
+            let randomNumber2 = Math.floor(Math.random() * 4) + 1;
+
+            let sum = randomNumber1 + randomNumber2;
+
+            let result = (sum % 2 === 0) ? "even" : "odd";
+
+            let outcome = (guess === result) ? "win" : "lose";
+
+            if (outcome === "win") {
+                wins++;
+            } else {
+                losses++;
+            }
+
+            alert(`${name}, you picked ${guess}. the sum is ${result}, you ${outcome}!`);
+            alert(`Score: Wins: ${wins} - Losses: ${losses}`);
+
+            if (confirm(`Do you want to play again ${name}?`)) {
+                playGame();
+            }
+        }
     </script>
 
 </body>
